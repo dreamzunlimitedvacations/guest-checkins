@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Lighthouse Bay — Diego's Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1c3c5e;
+    --navy-deep: #0f2536;
+    --coral: #e07856;
+    --coral-soft: #f4d4c4;
+    --sand: #e8dcc4;
+    --sand-light: #f5ecd9;
+    --cream: #faf6ef;
+    --sky: #c8e0e8;
+    --sky-deep: #7ab0bf;
+    --ink: #2a2a2a;
+    --muted: #6b7280;
+    --line: #e5dccb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: rgba(224,120,86,0.15); }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; text-decoration: none; }
+  .serif { font-family: 'Fraunces', Georgia, serif; font-weight: 500; letter-spacing: -0.01em; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color: var(--cream);
+    padding: 2.5rem 1rem 0;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 20% 20%, rgba(224,120,86,0.15) 0%, transparent 40%),
+                      radial-gradient(circle at 80% 60%, rgba(122,176,191,0.18) 0%, transparent 45%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; max-width: 720px; margin: 0 auto; padding-bottom: 3.5rem; }
+  .lighthouse-mark { width: 52px; height: 74px; margin: 0 auto 1.25rem; display: block; }
+  .eyebrow {
+    font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--coral-soft); margin-bottom: 0.75rem; font-weight: 500;
+  }
+  .hero h1 { font-size: clamp(2.2rem, 9vw, 3.6rem); line-height: 1.05; margin-bottom: 0.9rem; font-weight: 600; }
+  .hero h1 em { font-style: italic; color: var(--coral); font-weight: 500; }
+  .hero-sub {
+    font-size: 14px; color: rgba(255,255,255,0.78); max-width: 460px;
+    margin: 0 auto 1.5rem; line-height: 1.65; padding: 0 0.5rem;
+  }
+  .hero-meta {
+    display: inline-flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; justify-content: center;
+    font-size: 11px; color: rgba(255,255,255,0.6); letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .hero-meta-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--coral); }
+  .wave-divider { display: block; width: 100%; height: 50px; }
+  .wave-divider path { fill: var(--cream); }
+
+  /* CONTAINER */
+  .container { max-width: 720px; margin: 0 auto; padding: 0 1rem; }
+  section { margin: 2.5rem 0; }
+  .section-eyebrow {
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--coral); font-weight: 600; margin-bottom: 0.5rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-eyebrow::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, var(--coral) 0%, transparent 100%);
+  }
+  .section-title { font-size: clamp(1.7rem, 6vw, 2rem); line-height: 1.15; margin-bottom: 1.25rem; color: var(--navy); }
+  .section-title em { font-style: italic; color: var(--coral); }
+  .section-intro { font-size: 13.5px; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.65; }
+
+  /* STAY CARD */
+  .stay-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 1.5rem 1.25rem;
+    margin-top: -2rem;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 20px 50px -25px rgba(28,60,94,0.25);
+  }
+  .stay-greet { font-size: 17px; color: var(--navy); margin-bottom: 0.25rem; }
+  .stay-greet em { color: var(--coral); font-style: italic; }
+  .stay-address {
+    font-size: 12px; color: var(--muted); margin-bottom: 1rem;
+    display: block; line-height: 1.5;
+  }
+  .stay-address a {
+    color: var(--navy); border-bottom: 1px dashed var(--coral);
+    padding-bottom: 1px; transition: color 0.2s;
+  }
+  .stay-address a:active { color: var(--coral); }
+  .stay-intro { font-size: 13.5px; line-height: 1.65; color: #444; margin-bottom: 1.25rem; }
+  .stay-intro strong { color: var(--navy); font-weight: 600; }
+  .stay-intro a.tel-link {
+    color: var(--coral); font-weight: 600; white-space: nowrap;
+    border-bottom: 1px solid var(--coral); padding-bottom: 1px;
+  }
+  .stay-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: var(--line); border-radius: 12px; overflow: hidden;
+  }
+  .stay-cell { background: var(--sand-light); padding: 0.85rem 1rem; }
+  .stay-cell .label {
+    font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 5px; font-weight: 600;
+  }
+  .stay-cell .value { font-size: 17px; color: var(--navy); font-weight: 600; line-height: 1.25; word-break: break-all; }
+  .stay-cell .sub { font-size: 11px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
+  .wifi-row {
+    margin-top: 1px;
+    background: var(--sand-light);
+    padding: 0.85rem 1rem;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    border-radius: 0 0 12px 12px;
+  }
+  .wifi-row .label {
+    font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted); font-weight: 600;
+  }
+  .wifi-row .creds {
+    font-size: 13px; color: var(--navy); font-weight: 600; text-align: right;
+    min-width: 0; overflow-wrap: anywhere;
+  }
+  .wifi-row .creds small { display: block; color: var(--muted); font-weight: 400; font-size: 11px; }
+
+  /* TABS */
+  .tabs {
+    display: flex; gap: 4px; padding: 4px;
+    background: var(--sand); border-radius: 14px; margin-bottom: 1.25rem;
+  }
+  .tab {
+    flex: 1; border: none; background: transparent;
+    padding: 12px 6px; font-family: inherit; font-size: 12.5px; font-weight: 600;
+    color: var(--muted); cursor: pointer; border-radius: 10px;
+    transition: all 0.2s; min-height: 44px; line-height: 1.25;
+  }
+  .tab.active { background: #fff; color: var(--navy); box-shadow: 0 2px 8px rgba(28,60,94,0.08); }
+  .tab:active:not(.active) { color: var(--navy); background: rgba(255,255,255,0.5); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ROUTE CARDS */
+  .route-card {
+    background: #fff; border: 1px solid var(--line);
+    border-radius: 16px; overflow: hidden;
+  }
+  .route-header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color: var(--cream); padding: 1.1rem 1.25rem;
+  }
+  .route-header .from { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--coral-soft); margin-bottom: 4px; }
+  .route-header .title { font-size: 16px; font-weight: 600; line-height: 1.3; }
+  .route-header .duration { font-size: 11.5px; color: rgba(255,255,255,0.7); margin-top: 5px; line-height: 1.45; }
+  .route-steps { padding: 0.25rem 0; }
+  .route-step {
+    display: flex; gap: 0.9rem; padding: 0.9rem 1.25rem;
+    border-bottom: 1px dashed var(--line);
+  }
+  .route-step:last-child { border-bottom: none; }
+  .step-num {
+    flex-shrink: 0; width: 26px; height: 26px;
+    background: var(--sand-light); color: var(--navy);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 12px;
+  }
+  .step-content { font-size: 13px; color: #444; line-height: 1.6; }
+  .step-content strong { color: var(--navy); }
+  .route-tip {
+    background: linear-gradient(135deg, #fdf5e8 0%, #fef9ef 100%);
+    border-top: 1px solid var(--line);
+    padding: 0.9rem 1.25rem; display: flex; gap: 10px; align-items: flex-start;
+  }
+  .route-tip .icon { font-size: 17px; flex-shrink: 0; }
+  .route-tip .text { font-size: 12px; color: #856420; line-height: 1.6; }
+  .route-tip strong { color: #6b4d10; }
+  .landmarks {
+    padding: 0.9rem 1.25rem; background: var(--sand-light); border-top: 1px solid var(--line);
+  }
+  .landmarks .lm-title { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; font-weight: 600; }
+  .landmarks ul { list-style: none; font-size: 12.5px; color: #444; }
+  .landmarks li { padding: 3px 0; position: relative; padding-left: 16px; line-height: 1.5; }
+  .landmarks li::before { content: '◆'; position: absolute; left: 0; color: var(--coral); font-size: 8px; top: 8px; }
+  .landmarks strong { color: var(--navy); }
+
+  /* PARKING */
+  .parking-card {
+    background: #fff; border: 1px solid var(--line); border-radius: 14px;
+    padding: 1.1rem 1.25rem; margin-top: 1rem;
+  }
+  .parking-card h3 {
+    font-size: 14px; color: var(--navy); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .parking-card ul { list-style: none; font-size: 13px; }
+  .parking-card li {
+    padding: 4px 0; padding-left: 16px; position: relative; color: #444; line-height: 1.5;
+  }
+  .parking-card li::before { content: '→'; position: absolute; left: 0; color: var(--coral); }
+  .parking-card strong { color: var(--navy); }
+
+  /* FLOORS */
+  .floor-item {
+    display: flex; gap: 1rem; margin-bottom: 0.85rem;
+    background: #fff; border: 1px solid var(--line);
+    border-radius: 14px; padding: 1.1rem 1.25rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .floor-item:active { transform: translateY(-1px); box-shadow: 0 6px 20px -10px rgba(28,60,94,0.15); }
+  .floor-marker {
+    flex-shrink: 0; width: 48px; height: 48px;
+    background: linear-gradient(135deg, var(--coral) 0%, #d56542 100%);
+    color: #fff; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; font-weight: 700; font-family: 'Fraunces', serif;
+    box-shadow: 0 4px 12px rgba(224,120,86,0.3);
+  }
+  .floor-marker .num { font-size: 20px; line-height: 1; }
+  .floor-marker .lbl { font-size: 7.5px; letter-spacing: 0.15em; opacity: 0.85; margin-top: 2px; }
+  .floor-body h3 { font-size: 15px; color: var(--navy); margin-bottom: 5px; font-weight: 600; }
+  .floor-body p { font-size: 13px; color: #555; line-height: 1.6; }
+  .floor-body strong { color: var(--navy); }
+
+  /* BEACH KIT */
+  .kit-card {
+    background: linear-gradient(135deg, #fff 0%, var(--sky) 220%);
+    border: 1px solid var(--line);
+    border-radius: 18px; padding: 1.25rem;
+  }
+  .kit-header { text-align: center; margin-bottom: 1.1rem; }
+  .kit-header .badge {
+    display: inline-block; background: var(--coral); color: #fff;
+    padding: 4px 12px; border-radius: 100px; font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .kit-header h3 { font-size: 17px; color: var(--navy); font-weight: 600; }
+  .kit-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+  }
+  .kit-item {
+    background: #fff; border-radius: 12px; padding: 0.9rem 0.5rem;
+    text-align: center; border: 1px solid var(--line);
+  }
+  .kit-item .ill { width: 34px; height: 34px; margin: 0 auto 6px; }
+  .kit-item .name { font-size: 11px; color: var(--navy); font-weight: 600; line-height: 1.3; }
+  .kit-item .qty { font-size: 10px; color: var(--coral); margin-top: 2px; font-weight: 600; }
+  .kit-note {
+    background: var(--sand-light); border-radius: 10px; padding: 10px 14px;
+    margin-top: 1rem; font-size: 12px; color: #6b4d10; line-height: 1.6;
+    display: flex; gap: 8px; align-items: flex-start;
+  }
+  .kit-note strong { color: #6b4d10; }
+
+  /* NEIGHBORHOOD — sub-sections */
+  .sub-eyebrow {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--coral); font-weight: 600; margin: 1.5rem 0 0.75rem; display: flex; align-items: center; gap: 8px;
+  }
+  .sub-eyebrow:first-child { margin-top: 0; }
+  .sub-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--coral); display: inline-block; }
+
+  /* PLACE CARDS */
+  .place-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .place-card {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: #fff; border: 1px solid var(--line);
+    border-radius: 14px; padding: 1rem 1.1rem;
+    transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+    min-height: 44px;
+  }
+  .place-card:active {
+    transform: scale(0.99);
+    border-color: var(--coral);
+    box-shadow: 0 4px 16px -8px rgba(224,120,86,0.4);
+  }
+  @media (hover: hover) {
+    .place-card:hover {
+      border-color: var(--coral);
+      box-shadow: 0 4px 16px -8px rgba(224,120,86,0.3);
+    }
+  }
+  .place-icon {
+    flex-shrink: 0; width: 40px; height: 40px;
+    background: var(--sand-light); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px;
+  }
+  .place-body { flex: 1; min-width: 0; }
+  .place-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .place-name { font-size: 14px; color: var(--navy); font-weight: 600; line-height: 1.3; }
+  .place-meta { font-size: 10.5px; color: var(--coral); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+  .place-desc { font-size: 12.5px; color: #555; line-height: 1.5; margin-top: 4px; }
+  .place-arrow {
+    font-size: 18px; color: var(--coral); flex-shrink: 0;
+    align-self: center; opacity: 0.6;
+  }
+
+  /* ESSENTIALS */
+  .essentials { background: #fff; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .essential-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 0.85rem 1.1rem;
+    border-bottom: 1px solid var(--line);
+    min-height: 44px;
+  }
+  .essential-row:last-child { border-bottom: none; }
+  .essential-icon { font-size: 17px; flex-shrink: 0; }
+  .essential-body { flex: 1; min-width: 0; }
+  .essential-title { font-size: 13.5px; color: var(--navy); font-weight: 600; line-height: 1.3; }
+  .essential-sub { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+  .essential-arrow { color: var(--coral); font-size: 18px; opacity: 0.6; flex-shrink: 0; }
+
+  /* HOUSE RULES */
+  .rules { background: #fff; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .rule {
+    padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--line);
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .rule:last-child { border-bottom: none; }
+  .rule-icon { font-size: 17px; flex-shrink: 0; }
+  .rule-title { font-size: 13.5px; color: var(--navy); font-weight: 600; margin-bottom: 4px; line-height: 1.35; }
+  .rule-body { font-size: 12.5px; color: #555; line-height: 1.6; }
+  .rule-danger { background: linear-gradient(135deg, #fff5f3 0%, #fff 100%); }
+  .rule-danger .rule-title { color: #c0392b; }
+  .rule ul { list-style: none; margin-top: 6px; font-size: 12.5px; }
+  .rule ul li { padding: 3px 0; padding-left: 14px; position: relative; color: #555; line-height: 1.5; }
+  .rule ul li::before { content: '–'; position: absolute; left: 0; color: var(--coral); }
+  .rule .note { font-size: 11.5px; color: var(--muted); font-style: italic; margin-top: 8px; line-height: 1.55; }
+
+  /* CHECKOUT */
+  .checkout-card { background: #fff; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .checkout-row { padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--line); }
+  .checkout-row:last-child { border-bottom: none; }
+  .checkout-row h4 {
+    font-size: 13px; color: var(--navy); margin-bottom: 6px; font-weight: 600;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .checkout-row ul { list-style: none; font-size: 12.5px; }
+  .checkout-row li { padding: 3px 0 3px 20px; position: relative; color: #444; line-height: 1.5; }
+  .checkout-row li::before {
+    content: '☐'; position: absolute; left: 0; color: var(--coral); font-size: 13px;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--navy); color: var(--cream);
+    padding: 2.25rem 1rem; text-align: center;
+    margin-top: 2.5rem; position: relative; overflow: hidden;
+  }
+  .footer-mark { width: 38px; height: 54px; margin: 0 auto 0.85rem; display: block; }
+  .footer h3 { font-size: clamp(1.25rem, 5vw, 1.4rem); margin-bottom: 0.5rem; line-height: 1.2; }
+  .footer h3 em { font-style: italic; color: var(--coral); }
+  .footer p { font-size: 13px; color: rgba(255,255,255,0.78); max-width: 460px; margin: 0 auto 0.6rem; line-height: 1.7; }
+  .footer p strong { color: #fff; }
+  .footer a {
+    color: var(--coral-soft); font-weight: 600;
+    border-bottom: 1px solid rgba(244,212,196,0.4); padding-bottom: 1px;
+  }
+  .footer-sig { font-family: 'Fraunces', serif; font-style: italic; color: var(--coral-soft); margin-top: 1.1rem; font-size: 13.5px; }
+
+  /* RESPONSIVE — TABLET UP */
+  @media (min-width: 640px) {
+    .hero { padding: 3.25rem 1.5rem 0; }
+    .hero-inner { padding-bottom: 4rem; }
+    .lighthouse-mark { width: 56px; height: 80px; margin-bottom: 1.5rem; }
+    .hero-sub { font-size: 15px; margin-bottom: 2rem; }
+    .container { padding: 0 1.25rem; }
+    section { margin: 3rem 0; }
+    .stay-card { padding: 2rem; margin-top: -2.5rem; border-radius: 20px; }
+    .stay-cell { padding: 1rem 1.25rem; }
+    .stay-cell .value { font-size: 18px; }
+    .wifi-row { padding: 0.9rem 1.25rem; }
+    .place-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .tab { font-size: 13px; padding: 13px 10px; }
+    .floor-item { padding: 1.25rem 1.5rem; gap: 1.25rem; }
+    .floor-marker { width: 52px; height: 52px; border-radius: 14px; }
+    .floor-marker .num { font-size: 22px; }
+    .kit-card { padding: 1.5rem; }
+    .route-step { padding: 1rem 1.5rem; gap: 1rem; }
+    .step-num { width: 28px; height: 28px; }
+    .step-content { font-size: 13.5px; }
+    .rule { padding: 1rem 1.5rem; gap: 14px; }
+    .checkout-row { padding: 1rem 1.5rem; }
+    .essential-row { padding: 1rem 1.25rem; }
+    .footer { padding: 2.5rem 1.5rem; }
+  }
+
+  /* RESPONSIVE — VERY SMALL PHONES */
+  @media (max-width: 359px) {
+    .container { padding: 0 0.75rem; }
+    .stay-card { padding: 1.25rem 1rem; }
+    .kit-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
+    .tab { font-size: 11.5px; padding: 12px 4px; }
+    .hero { padding: 2rem 1rem 0; }
+    .floor-item { padding: 1rem; gap: 0.85rem; }
+    .floor-marker { width: 42px; height: 42px; }
+    .floor-marker .num { font-size: 17px; }
+    .place-card { padding: 0.9rem 1rem; gap: 12px; }
+    .place-icon { width: 36px; height: 36px; font-size: 17px; }
+    .stay-cell { padding: 0.75rem 0.85rem; }
+    .stay-cell .value { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <svg class="lighthouse-mark" viewBox="0 0 56 80" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 28 22 L 4 14 L 4 30 Z" fill="#e07856" opacity="0.3"/>
+      <path d="M 28 22 L 52 14 L 52 30 Z" fill="#e07856" opacity="0.3"/>
+      <circle cx="28" cy="8" r="2" fill="#e07856"/>
+      <rect x="24" y="10" width="8" height="3" fill="#faf6ef"/>
+      <rect x="22" y="13" width="12" height="10" fill="#e07856" rx="1"/>
+      <rect x="24" y="16" width="8" height="4" fill="#fef3c7"/>
+      <path d="M 20 23 L 36 23 L 38 38 L 18 38 Z" fill="#faf6ef"/>
+      <rect x="20" y="26" width="16" height="2" fill="#e07856"/>
+      <rect x="20" y="32" width="16" height="2" fill="#e07856"/>
+      <path d="M 16 38 L 40 38 L 42 56 L 14 56 Z" fill="#faf6ef"/>
+      <rect x="26" y="44" width="4" height="8" fill="#1c3c5e"/>
+      <path d="M 10 56 L 46 56 L 50 64 L 6 64 Z" fill="#7ab0bf" opacity="0.6"/>
+      <path d="M 0 68 Q 8 64 16 68 T 32 68 T 48 68 T 56 68 L 56 80 L 0 80 Z" fill="#7ab0bf" opacity="0.4"/>
+      <path d="M 0 74 Q 8 70 16 74 T 32 74 T 48 74 T 56 74 L 56 80 L 0 80 Z" fill="#7ab0bf" opacity="0.6"/>
+    </svg>
+    <div class="eyebrow">A Coastal Welcome</div>
+    <h1 class="serif">Lighthouse <em>Bay</em></h1>
+    <p class="hero-sub">A four-story beach home tucked two blocks south of the Maryland–Delaware line, where Coastal Highway meets the Atlantic.</p>
+    <div class="hero-meta">
+      <span>Ocean City</span>
+      <span class="hero-meta-dot"></span>
+      <span>Maryland</span>
+      <span class="hero-meta-dot"></span>
+      <span>Est. by the Sea</span>
+    </div>
+  </div>
+  <svg class="wave-divider" viewBox="0 0 1440 60" preserveAspectRatio="none">
+    <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z"/>
+  </svg>
+</div>
+
+<div class="container">
+
+  <!-- AT A GLANCE -->
+  <div class="stay-card">
+    <div class="stay-greet serif">Welcome, <em>Diego</em></div>
+    <div class="stay-address">
+      <a href="https://www.google.com/maps/search/?api=1&query=105+144th+St+Unit+B+Ocean+City+MD+21842" target="_blank" rel="noopener noreferrer">105 144th St, Unit B · Ocean City, MD 21842 →</a>
+    </div>
+    <p class="stay-intro">So glad to have you. You're staying in a great spot — Fenwick Island practically at your doorstep and the Atlantic just a 5-minute walk away. Message us on Airbnb anytime or call <a href="tel:+14434730881" class="tel-link">443-473-0881</a> for anything urgent.</p>
+    <div class="stay-grid">
+      <div class="stay-cell">
+        <div class="label">Check-in</div>
+        <div class="value">3 PM</div>
+        <div class="sub">Sunday, September 6</div>
+      </div>
+      <div class="stay-cell">
+        <div class="label">Check-out</div>
+        <div class="value">10 AM</div>
+        <div class="sub">Monday, September 7</div>
+      </div>
+      <div class="stay-cell">
+        <div class="label">Front Door</div>
+        <div class="value">7798</div>
+      </div>
+      <div class="stay-cell">
+        <div class="label">Garage</div>
+        <div class="value">258789</div>
+      </div>
+    </div>
+    <div class="wifi-row">
+      <div>
+        <div class="label">Wi-Fi</div>
+      </div>
+      <div class="creds">
+        105bguests
+        <small>1@5b144stLhB</small>
+        Emerald
+        <small>z9Xm79rjcnbb445q1@5b</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- GETTING HERE -->
+  <section>
+    <div class="section-eyebrow">Chapter One</div>
+    <h2 class="section-title serif">Getting <em>Here</em></h2>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" onclick="switchTab(event, 'tab-bal')">Baltimore / DC</button>
+      <button class="tab" onclick="switchTab(event, 'tab-north')">NY / NJ / PA</button>
+    </div>
+
+    <div class="tab-panel active" id="tab-bal">
+      <div class="route-card">
+        <div class="route-header">
+          <div class="from">Approaching from the West</div>
+          <div class="title">Baltimore · DC · Annapolis</div>
+          <div class="duration">3 – 5+ hours · Arrive from the south</div>
+        </div>
+        <div class="route-steps">
+          <div class="route-step"><div class="step-num">1</div><div class="step-content">Take <strong>US-50 East</strong> toward Annapolis</div></div>
+          <div class="route-step"><div class="step-num">2</div><div class="step-content">Cross the <strong>Chesapeake Bay Bridge</strong> — toll eastbound (EZ-Pass or pay-by-plate)</div></div>
+          <div class="route-step"><div class="step-num">3</div><div class="step-content">Continue ~115 miles east on US-50: Kent Island → Easton → Cambridge → Salisbury</div></div>
+          <div class="route-step"><div class="step-num">4</div><div class="step-content"><strong>Near Berlin / West OC, exit onto MD-90 East</strong> (Ocean City Expressway) — saves 30–60+ min in summer. Only 2 traffic lights.</div></div>
+          <div class="route-step"><div class="step-num">5</div><div class="step-content">MD-90 ends at <strong>Coastal Highway (MD-528)</strong> at 62nd Street</div></div>
+          <div class="route-step"><div class="step-num">6</div><div class="step-content"><strong>Turn LEFT (north)</strong> on Coastal Highway</div></div>
+          <div class="route-step"><div class="step-num">7</div><div class="step-content">Drive ~4 miles north to <strong>144th Street</strong> — turn and you've arrived</div></div>
+        </div>
+        <div class="route-tip">
+          <div class="icon">⏰</div>
+          <div class="text"><strong>Bay Bridge timing:</strong> Heavy backups Friday 2–7 PM and Saturday 8 AM–noon in summer. Leave before 10 AM Friday or after 7 PM to avoid the worst of it.</div>
+        </div>
+        <div class="landmarks">
+          <div class="lm-title">Final-mile landmarks</div>
+          <ul>
+            <li><strong>Northside Park</strong> — bay side, around 125th St</li>
+            <li><strong>Fenwick Inn</strong> — around 138th St</li>
+            <li><strong>"Welcome to Maryland" sign</strong> — if you cross it heading south, you've gone 2 blocks too far</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tab-north">
+      <div class="route-card">
+        <div class="route-header">
+          <div class="from">Approaching from the North</div>
+          <div class="title">New York · New Jersey · Philadelphia</div>
+          <div class="duration">Philly ~3 hrs · NJ ~3.5–4 hrs · NYC ~4.5 hrs · Arrive from the north</div>
+        </div>
+        <div class="route-steps">
+          <div class="route-step"><div class="step-num">1</div><div class="step-content">Head <strong>south on I-95</strong> (or NJ Turnpike → I-95) toward Wilmington, DE</div></div>
+          <div class="route-step"><div class="step-num">2</div><div class="step-content">Cross the <strong>Delaware Memorial Bridge</strong> into Delaware — $5 toll westbound only</div></div>
+          <div class="route-step"><div class="step-num">3</div><div class="step-content">Take <strong>DE-1 South</strong> (Delaware's Coastal Route) — this is your road for the next ~90 miles</div></div>
+          <div class="route-step"><div class="step-num">4</div><div class="step-content">Continue through <strong>Dover → Rehoboth Beach → Bethany Beach → Fenwick Island</strong></div></div>
+          <div class="route-step"><div class="step-num">5</div><div class="step-content">DE-1 becomes <strong>Coastal Highway (MD-528)</strong> as you cross into Maryland — watch for the "Welcome to Maryland" sign</div></div>
+          <div class="route-step"><div class="step-num">6</div><div class="step-content">Just 2 blocks past the state line — <strong>turn right at 144th Street</strong> and you've arrived</div></div>
+        </div>
+        <div class="route-tip">
+          <div class="icon">🌅</div>
+          <div class="text"><strong>Summer DE-1 traffic:</strong> Friday afternoons (2–7 PM) get heavy between Lewes and Fenwick. Leave Friday morning or push through to Saturday early. The Bay Bridge crowd doesn't affect this route — that's the silver lining.</div>
+        </div>
+        <div class="landmarks">
+          <div class="lm-title">Final-mile landmarks (heading south)</div>
+          <ul>
+            <li><strong>Fenwick Island State Park</strong> — last Delaware stretch</li>
+            <li><strong>"Welcome to Maryland" sign</strong> — the state line</li>
+            <li><strong>146th Street / Beach Liquors</strong> — you're one block away</li>
+            <li><strong>144th Street</strong> — turn right (bay side) for the property</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="parking-card">
+      <h3>🅿️ Parking, once you're here</h3>
+      <ul>
+        <li><strong>Private garage</strong> — code 258789, fits 2 cars</li>
+        <li><strong>Guest parking lot</strong> — additional spaces nearby</li>
+        <li><strong>Free street parking</strong> — Sinepuxent Avenue (side street)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- BEACH KIT -->
+  <section>
+    <div class="section-eyebrow">Chapter Two</div>
+    <h2 class="section-title serif">Your Beach <em>Kit</em></h2>
+    <div class="kit-card">
+      <div class="kit-header">
+        <span class="badge">Complimentary</span>
+        <h3 class="serif">Yours to use for the stay</h3>
+        <p style="font-size:12.5px;color:#6b7280;margin-top:8px;line-height:1.55;max-width:340px;margin-left:auto;margin-right:auto;">When you're done using any item, please return it to its original place so it's ready for the next guest.</p>
+      </div>
+      <div class="kit-grid">
+        <div class="kit-item">
+          <svg class="ill" viewBox="0 0 36 36"><path d="M18 4 L4 18 L32 18 Z" fill="#e07856"/><rect x="17" y="18" width="2" height="14" fill="#1c3c5e"/><path d="M16 32 Q18 34 20 32" stroke="#1c3c5e" stroke-width="2" fill="none"/></svg>
+          <div class="name">Umbrella</div>
+          <div class="qty">1 included</div>
+        </div>
+        <div class="kit-item">
+          <svg class="ill" viewBox="0 0 36 36"><rect x="8" y="14" width="20" height="3" fill="#e07856"/><rect x="9" y="17" width="2" height="14" fill="#1c3c5e"/><rect x="25" y="17" width="2" height="14" fill="#1c3c5e"/><rect x="11" y="14" width="2" height="8" fill="#1c3c5e"/><rect x="23" y="14" width="2" height="8" fill="#1c3c5e"/></svg>
+          <div class="name">Chairs</div>
+          <div class="qty">2 included</div>
+        </div>
+        <div class="kit-item">
+          <svg class="ill" viewBox="0 0 36 36"><ellipse cx="18" cy="18" rx="5" ry="14" fill="#e07856"/><ellipse cx="18" cy="18" rx="5" ry="14" stroke="#1c3c5e" stroke-width="1" fill="none"/><line x1="18" y1="6" x2="18" y2="30" stroke="#1c3c5e" stroke-width="1"/></svg>
+          <div class="name">Surfboards</div>
+          <div class="qty">2 included</div>
+        </div>
+        <div class="kit-item">
+          <svg class="ill" viewBox="0 0 36 36"><rect x="6" y="10" width="22" height="14" rx="2" fill="#e07856"/><circle cx="10" cy="28" r="3" fill="#1c3c5e"/><circle cx="24" cy="28" r="3" fill="#1c3c5e"/><rect x="6" y="14" width="22" height="2" fill="#faf6ef" opacity="0.6"/></svg>
+          <div class="name">Trolley</div>
+          <div class="qty">1 included</div>
+        </div>
+      </div>
+      <div class="kit-note">
+        <span>⚠️</span>
+        <span>Any item not returned at check-out is subject to a <strong>$75 replacement fee</strong> per item.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE HOUSE -->
+  <section>
+    <div class="section-eyebrow">Chapter Three</div>
+    <h2 class="section-title serif">The <em>House</em>, Floor by Floor</h2>
+    <div class="floor-timeline">
+      <div class="floor-item">
+        <div class="floor-marker"><span class="num">1</span><span class="lbl">FLOOR</span></div>
+        <div class="floor-body">
+          <h3>Garage & Living Space</h3>
+          <p>Main entrance and 2-car garage. Drop your gear in the living area and head up.</p>
+        </div>
+      </div>
+      <div class="floor-item">
+        <div class="floor-marker"><span class="num">2</span><span class="lbl">FLOOR</span></div>
+        <div class="floor-body">
+          <h3>Kitchen & Dining</h3>
+          <p>Your <strong>welcome bag</strong> is on the kitchen counter 🎁. The <strong>2 pool fobs</strong> are in the drawer next to the refrigerator — the community pool is open for the season! Coffee machine and pods ready. Both the <strong>kitchen</strong> and <strong>living room</strong> open onto private balconies. TV in the living room — great for unwinding in the evening.</p>
+        </div>
+      </div>
+      <div class="floor-item">
+        <div class="floor-marker"><span class="num">3</span><span class="lbl">FLOOR</span></div>
+        <div class="floor-body">
+          <h3>Two Bedrooms</h3>
+          <p><strong>Master bedroom</strong> with private balcony, King bed and TV. <strong>Second bedroom</strong> with a bunk bed.</p>
+        </div>
+      </div>
+      <div class="floor-item">
+        <div class="floor-marker"><span class="num">4</span><span class="lbl">FLOOR</span></div>
+        <div class="floor-body">
+          <h3>Bedroom & Loft</h3>
+          <p><strong>Bedroom</strong> with a Queen bed and private balcony. <strong>Loft</strong> with 2 day beds and a hangout space with TV — a good spot to decompress or get some quiet evening work done. <strong>Laundry room</strong> on this floor with a washer and dryer for your convenience.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEIGHBORHOOD -->
+  <section>
+    <div class="section-eyebrow">Chapter Four</div>
+    <h2 class="section-title serif">The <em>Neighborhood</em></h2>
+    <p class="section-intro">Tap any card to open it in Google Maps. We've kept the list curated — these are the spots we actually send friends to.</p>
+
+    <div class="sub-eyebrow"><span class="dot"></span> Seafood & Waterfront</div>
+    <div class="place-grid">
+      <a class="place-card" href="https://www.google.com/maps/search/?api=1&query=Harpoon+Hanna%27s+Fenwick+Island+DE" target="_blank" rel="noopener noreferrer">
+        <div class="place-icon">🦞</div>
+        <div class="place-body">
+          <div class="place-row">
+            <div class="place-name">Harpoon Hanna's</div>
+            <div class="place-meta">2 min N</div>
+          </div>
+          <div class="place-desc">Bayfront sunsets, crab cakes, the OC institution. Fenwick Island, DE.</div>
+        </div>
+        <div class="place-arrow">›</div>
+      </a>
+      <a class="place-card" href="https://www.google.com/maps/search/?api=1&query=Catch+54+Fenwick+Island+DE" target="_blank" rel="noopener noreferrer">
+        <div class="place-icon">🐟</div>
+        <div class="place-body">
+          <div class="place-row">
+            <div class="place-name">Catch 54</div>
+            <div class="place-meta">3 min N</div>
+          </div>
+          <div class="place-desc">Waterfront raw bar, fresh fish. Sister to Bluecoast — bring your appetite.</div>
+        </div>
+        <div class="place-arrow">›</div>
+      </a>
+      <a class="place-card" href="https://www.google.com/maps/search/?api=1&query=The+Crab+Bag+130th+Street+Ocean+City+MD" target="_blank" rel="noopener noreferrer">
+        <div class="place-icon">🦀</div>
+        <div class="place-body">
+          <div class="place-row">
+            <div class="place-name">The Crab Bag</div>
+            <div class="place-meta">3 min S</div>
+          </div>
+          <div class="place-desc">Steamed Maryland blue crabs, brown paper, mallets. 130th St.</div>
+        </div>
+        <div class="place-arrow">›</div>
+      </a>
+      <a class="place-card" href="https://www.google.com/maps/search/?api=1&query=Just+Hooked+Ocean+City+MD" target="_blank" rel="noopener noreferrer">
+        <div class="place-icon">🎣</div>
+        <div class="place-body">
+          <div class="place-row">
+            <div class="place-name">Just Hooked</div>
+            <div class="place-meta">4 min S</div>
+          </div>
+          <div class="place-desc">Local catch, casual, daily fresh. 128th St.</div>
+        </div>
+        <div class="place-arrow">›</div>
+      </a>
+      <a class="place-card" href="https://www.google.com/maps/search/?api=1&query=Fager%27s+Island+60th+Street+Ocean+City+MD" target="_blank" rel="noopener noreferrer">
+        <div class="place-icon">🥂</div>
+        <div class="place-body">
+          <div class="place-row">
+            <div class="place-name">Fager's Island</div>
+            <div class="place-meta">15 min S</div>
+          </div>
+          <div class="place-desc">Sunset cocktails over the bay, white tablecloth, live music. 60th St.</div>
+        </div>
+        <div class="place-arrow">›</div>
+      </a>
+    </div>
+
+    <div class="sub-eyebrow"><span class="dot"></span> Casual, Pizza & Breakfast</div>
+    <div class="place-grid">
+      <a class="place-card" href="https://www.google.com/maps/search/?api=1&query=Mancini%27s+Italian+145th+Street+Ocean+City+MD" target="_blank" rel="noopener noreferrer">
+        <div class="place-icon">🍝</div>
+        <div class="place-body">
+          <div class="place-row">
+            <div class="place-name">Mancini's Italian</div>
+            <div class="place-meta">Walkable</div>
+          </div>
+          <div class="place-desc">Italian classics, literally next door at 145th St. Easy first-night dinner.</div>
+        </div>
+        <div class="place-arrow">›</div>
+      </a>
+      <a class="place-card" href="https://www.google.com/maps/search/?api=1&query=Sello%27s+Italian+Oven+Ocean+City+MD" target="_blank" rel="noopener noreferrer">
+        <div class="place-icon">🍕</div>
+        <div class="place-body">
+          <div class="place-row">
+            <div class="place-name">Sello's Italian Oven</div>
+            <div class="place-meta">5 min S</div>
+          </div>
+          <div class="place-desc">Brick-oven pizza, family-style Italian. 113th St.</div>
+        </div>
+        <div class="place-arrow">›</div>
+      </a>
+      <a class="place-card" href="https://www.google.com/maps/search/?api=1&query=Bull+on+the+Beach+94th+Street+Ocean+City+MD" target="_blank" rel="noopener noreferrer">
+        <div class="place-icon">🥞</div>
+        <div class="place-body">
+          <div class="place-row">
+            <div class="place-name">Bull on the Beach</div>
+            <div class="place-meta">7 min S</div>
+          </div>
+          <div class="place-desc">Hearty breakfast and pit beef. 94th St — a North OC classic.</div>
+        </div>
+        <div class="place-arrow">›</div>
+      </a>
+      <a class="place-card" href="https://www.google.com/maps/search/?api=1&query=Layton%27s+Family+Restaurant+Ocean+City+MD" target="_blank" rel="noopener noreferrer">
+        <div class="place-icon">🍳</div>
+        <div class="place-body">
+          <div class="place-row">
+            <div class="place-name">Layton's</div>
+            <div class="place-meta">15 min S</div>
+          </div>
+          <div class="place-desc">Old-school OC diner breakfast. Worth the drive on a slow morning.</div>
+        </div>
+        <div class="place-arrow">›</div>
+      </a>
+    </div>
+
+    <div class="sub-eyebrow"><span class="dot"></span> Drinks & Nightlife</div>
+    <div class="place-grid">
+      <a class="place-card" href="https://www.google.com/maps/search/?api=1&query=Seacrets+49th+Street+Ocean+City+MD" target="_blank" rel="noopener noreferrer">
+        <div class="place-icon">🍹</div>
+        <div class="place-body">
+          <div class="place-row">
+            <div class="place-name">Seacrets</div>
+            <div class="place-meta">17 min S</div>
+          </div>
+          <div class="place-desc">Jamaican-themed waterfront mega-venue. Floating bars, live music, sand. An OC ritual.</div>
+        </div>
+        <div class="place-arrow">›</div>
+      </a>
+      <a class="place-card" href="https://www.google.com/maps/search/?api=1&query=Pickles+Pub+Ocean+City+MD" target="_blank" rel="noopener noreferrer">
+        <div class="place-icon">🍺</div>
+        <div class="place-body">
+          <div class="place-row">
+            <div class="place-name">Pickles Pub</div>
+            <div class="place-meta">20 min S</div>
+          </div>
+          <div class="place-desc">Local dive vibe, late-night bites, classic OC bar. 8th St.</div>
+        </div>
+        <div class="place-arrow">›</div>
+      </a>
+    </div>
+
+    <div class="sub-eyebrow"><span class="dot"></span> Things to Do</div>
+    <div class="place-grid">
+      <a class="place-card" href="https://www.google.com/maps/search/?api=1&query=Assateague+Island+National+Seashore" target="_blank" rel="noopener noreferrer">
+        <div class="place-icon">🐎</div>
+        <div class="place-body">
+          <div class="place-row">
+            <div class="place-name">Assateague Island</div>
+            <div class="place-meta">25 min S</div>
+          </div>
+          <div class="place-desc">Wild horses on the beach. The single most magical day-trip from OC. Don't skip it.</div>
+        </div>
+        <div class="place-arrow">›</div>
+      </a>
+      <a class="place-card" href="https://www.google.com/maps/search/?api=1&query=Fenwick+Island+State+Park+Delaware" target="_blank" rel="noopener noreferrer">
+        <div class="place-icon">🌾</div>
+        <div class="place-body">
+          <div class="place-row">
+            <div class="place-name">Fenwick Island State Park</div>
+            <div class="place-meta">5 min N</div>
+          </div>
+          <div class="place-desc">Quieter beach, dunes, kayak rentals on the bay side.</div>
+        </div>
+        <div class="place-arrow">›</div>
+      </a>
+      <a class="place-card" href="https://www.google.com/maps/search/?api=1&query=Northside+Park+125th+Street+Ocean+City+MD" target="_blank" rel="noopener noreferrer">
+        <div class="place-icon">🌳</div>
+        <div class="place-body">
+          <div class="place-row">
+            <div class="place-name">Northside Park</div>
+            <div class="place-meta">4 min S</div>
+          </div>
+          <div class="place-desc">Walking trails, fishing pier, playground. Quiet morning walk territory.</div>
+        </div>
+        <div class="place-arrow">›</div>
+      </a>
+      <a class="place-card" href="https://www.google.com/maps/search/?api=1&query=Ocean+City+Boardwalk+Maryland" target="_blank" rel="noopener noreferrer">
+        <div class="place-icon">🎡</div>
+        <div class="place-body">
+          <div class="place-row">
+            <div class="place-name">OC Boardwalk</div>
+            <div class="place-meta">25 min S</div>
+          </div>
+          <div class="place-desc">3 miles of classic Americana — Thrasher's fries, Dolle's saltwater taffy, Trimper's rides.</div>
+        </div>
+        <div class="place-arrow">›</div>
+      </a>
+      <a class="place-card" href="https://www.google.com/maps/search/?api=1&query=Jolly+Roger+Amusement+Park+Ocean+City+MD" target="_blank" rel="noopener noreferrer">
+        <div class="place-icon">🎢</div>
+        <div class="place-body">
+          <div class="place-row">
+            <div class="place-name">Jolly Roger Park</div>
+            <div class="place-meta">15 min S</div>
+          </div>
+          <div class="place-desc">Rides, mini golf, splash mountain. 30th St — great rainy-afternoon backup plan.</div>
+        </div>
+        <div class="place-arrow">›</div>
+      </a>
+    </div>
+
+    <div class="sub-eyebrow"><span class="dot"></span> Daily Essentials</div>
+    <div class="essentials">
+      <a class="essential-row" href="https://www.google.com/maps/search/?api=1&query=Oceans+Gateway+beach+access+144th+Street+Ocean+City+MD" target="_blank" rel="noopener noreferrer">
+        <div class="essential-icon">🌊</div>
+        <div class="essential-body">
+          <div class="essential-title">Oceans Gateway — Beach Access</div>
+          <div class="essential-sub">5-min walk · nearest public beach entry</div>
+        </div>
+        <div class="essential-arrow">›</div>
+      </a>
+      <a class="essential-row" href="https://www.google.com/maps/search/?api=1&query=Acme+Markets+120th+Street+Ocean+City+MD" target="_blank" rel="noopener noreferrer">
+        <div class="essential-icon">🛒</div>
+        <div class="essential-body">
+          <div class="essential-title">Acme Markets</div>
+          <div class="essential-sub">120th &amp; Coastal Hwy · 3 min south · closest grocery</div>
+        </div>
+        <div class="essential-arrow">›</div>
+      </a>
+      <a class="essential-row" href="https://www.google.com/maps/search/?api=1&query=Harris+Teeter+76th+Street+Ocean+City+MD" target="_blank" rel="noopener noreferrer">
+        <div class="essential-icon">🥖</div>
+        <div class="essential-body">
+          <div class="essential-title">Harris Teeter</div>
+          <div class="essential-sub">76th &amp; Coastal Hwy · larger selection</div>
+        </div>
+        <div class="essential-arrow">›</div>
+      </a>
+      <a class="essential-row" href="https://www.google.com/maps/search/?api=1&query=Walmart+Route+50+West+Ocean+City+MD" target="_blank" rel="noopener noreferrer">
+        <div class="essential-icon">🏪</div>
+        <div class="essential-body">
+          <div class="essential-title">Walmart Supercenter</div>
+          <div class="essential-sub">Rt 50, West OC · for everything else</div>
+        </div>
+        <div class="essential-arrow">›</div>
+      </a>
+      <a class="essential-row" href="https://www.google.com/maps/search/?api=1&query=Beach+Liquors+146th+Street+Ocean+City+MD" target="_blank" rel="noopener noreferrer">
+        <div class="essential-icon">🍾</div>
+        <div class="essential-body">
+          <div class="essential-title">Beach Liquors</div>
+          <div class="essential-sub">146th &amp; Coastal Hwy · under a minute away</div>
+        </div>
+        <div class="essential-arrow">›</div>
+      </a>
+      <a class="essential-row" href="https://www.google.com/maps/search/?api=1&query=AtlantiCare+Urgent+Care+Ocean+City+MD" target="_blank" rel="noopener noreferrer">
+        <div class="essential-icon">⛑️</div>
+        <div class="essential-body">
+          <div class="essential-title">AtlantiCare Urgent Care</div>
+          <div class="essential-sub">126th St · in case of minor emergencies</div>
+        </div>
+        <div class="essential-arrow">›</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- HOUSE RULES -->
+  <section>
+    <div class="section-eyebrow">Chapter Five</div>
+    <h2 class="section-title serif">House <em>Rules</em></h2>
+    <div class="rules">
+      <div class="rule">
+        <div class="rule-icon">🚭</div>
+        <div>
+          <div class="rule-title">No smoking or vaping — $1,000 violation fee</div>
+          <div class="rule-body">This is a non-smoking property. Smoking and vaping are prohibited everywhere on the premises, including patios, balconies, and the garage.</div>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="rule-icon">🌙</div>
+        <div>
+          <div class="rule-title">Quiet hours</div>
+          <div class="rule-body"><strong>House quiet hours:</strong> 10 PM – 9 AM. Please keep noise levels down during these hours so neighbors and other guests can rest.</div>
+          <div class="rule-body" style="margin-top:6px;"><strong>Ocean City ordinance:</strong> No disruptive noise between midnight and 7 AM, audible at 50 feet from the building. Enforced by the Town.</div>
+          <div class="rule-body" style="margin-top:6px;">Only registered guests are permitted on the premises between midnight and 7 AM.</div>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="rule-icon">🅿️</div>
+        <div>
+          <div class="rule-title">Garage fits 2 cars</div>
+          <div class="rule-body">Guest lot and Sinepuxent Ave available for additional vehicles.</div>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="rule-icon">🪑</div>
+        <div><div class="rule-title">Please don't move furniture between floors</div></div>
+      </div>
+      <div class="rule rule-danger">
+        <div class="rule-icon">⚠️</div>
+        <div>
+          <div class="rule-title">No parties, events, or gatherings — $1,000 violation fee</div>
+          <div class="rule-body" style="margin-bottom:8px;">Strictly prohibited regardless of size or nature. This includes any gathering beyond the registered guest count, unregistered overnight guests, amplified music or noise audible outside the property, and events of any kind — birthdays, reunions, celebrations, etc.</div>
+          <div class="rule-body">Violations will result in:</div>
+          <ul>
+            <li>Immediate reservation termination without refund</li>
+            <li>$1,000 fee assessed as liquidated damages</li>
+            <li>Recovery of any additional damages, Town of Ocean City fines, or HOA penalties</li>
+            <li>Reporting to Airbnb and potential listing on Airbnb's restricted guest list</li>
+          </ul>
+          <p class="note">The property is monitored by exterior security cameras and indoor decibel-level noise monitors (no audio recording, no interior cameras). Evidence from these devices will be used to document violations.</p>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="rule-icon">📋</div>
+        <div>
+          <div class="rule-title">Ocean City ordinance compliance</div>
+          <div class="rule-body">By booking this property, the primary booker acknowledges and agrees to all house rules on behalf of the entire party, including compliance with Ocean City, MD short-term rental regulations and applicable noise ordinances.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHECKOUT -->
+  <section>
+    <div class="section-eyebrow">Chapter Six</div>
+    <h2 class="section-title serif">Until We Meet <em>Again</em></h2>
+    <p class="section-intro">Checkout by 10 AM, Monday, September 7th. A quick list to help you on your way.</p>
+    <div class="checkout-card">
+      <div class="checkout-row">
+        <h4>🗑️ Trash</h4>
+        <ul>
+          <li>Bag and remove all trash from every floor — kitchen, bathrooms, bedrooms, loft</li>
+          <li>Trash bins are outside near the garage — please don't leave bags inside</li>
+        </ul>
+      </div>
+      <div class="checkout-row">
+        <h4>🍽️ Kitchen</h4>
+        <ul>
+          <li>Rinse dishes and load the dishwasher — run it before you leave</li>
+          <li>Remove leftover food from the fridge and discard</li>
+          <li>Wipe down the stovetop and counters</li>
+        </ul>
+      </div>
+      <div class="checkout-row">
+        <h4>🏊 Pool fobs</h4>
+        <ul>
+          <li>Return both pool fobs to the drawer next to the refrigerator for the next guests</li>
+          <li>⚠️ Missing or unreturned fobs are subject to a $100 replacement fee per fob</li>
+        </ul>
+      </div>
+      <div class="checkout-row">
+        <h4>🛏️ Bedrooms & linens</h4>
+        <ul>
+          <li>Strip all beds and leave sheets in a pile on the mattress</li>
+          <li>Drop used towels on the bathroom floor — no need to fold</li>
+          <li>Check under beds and in drawers for personal items</li>
+        </ul>
+      </div>
+      <div class="checkout-row">
+        <h4>💡 Lights, fans & AC</h4>
+        <ul>
+          <li>Turn off all lights on every floor</li>
+          <li>Turn off all ceiling fans</li>
+          <li>Set thermostat to 75°F — do not turn it off completely</li>
+          <li>Close all windows before leaving</li>
+        </ul>
+      </div>
+      <div class="checkout-row">
+        <h4>🏖️ Beach gear</h4>
+        <ul>
+          <li>Return all beach gear to the garage — 1 umbrella, 2 chairs, 2 surfboards, 1 trolley</li>
+        </ul>
+      </div>
+      <div class="checkout-row">
+        <h4>📺 Electronics</h4>
+        <ul>
+          <li>Turn off all TVs</li>
+          <li>Log out of any personal streaming accounts (Netflix, Hulu, etc.)</li>
+        </ul>
+      </div>
+      <div class="checkout-row">
+        <h4>🔒 Lock up</h4>
+        <ul>
+          <li>Close and lock all exterior doors and windows</li>
+          <li>Pull the front door shut until you hear the lock engage</li>
+          <li>Lower the garage door and confirm it's fully closed before leaving</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <svg class="footer-mark" viewBox="0 0 56 80" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="28" cy="8" r="2" fill="#e07856"/>
+    <rect x="24" y="10" width="8" height="3" fill="#faf6ef"/>
+    <rect x="22" y="13" width="12" height="10" fill="#e07856" rx="1"/>
+    <rect x="24" y="16" width="8" height="4" fill="#fef3c7"/>
+    <path d="M 20 23 L 36 23 L 38 38 L 18 38 Z" fill="#faf6ef"/>
+    <rect x="20" y="26" width="16" height="2" fill="#e07856"/>
+    <rect x="20" y="32" width="16" height="2" fill="#e07856"/>
+    <path d="M 16 38 L 40 38 L 42 56 L 14 56 Z" fill="#faf6ef"/>
+    <rect x="26" y="44" width="4" height="8" fill="#1c3c5e"/>
+  </svg>
+  <h3 class="serif">Safe travels, <em>Diego</em></h3>
+  <p>Send us a text when you're 30 minutes out so we can confirm everything is ready.</p>
+  <p>Message us on Airbnb anytime or call/text <a href="tel:+14434730881"><strong>443-473-0881</strong></a> for anything urgent.</p>
+  <div class="footer-sig">— Dreamz Unlimited Vacations</div>
+</div>
+
+<script>
+  function switchTab(e, id) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    e.currentTarget.classList.add('active');
+    document.getElementById(id).classList.add('active');
+  }
+</script>
+
+</body>
+</html>
